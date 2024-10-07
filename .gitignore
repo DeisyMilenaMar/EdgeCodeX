@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.sw[po]
+vendor/*
+.root_home/*
+tpaga_api/htmlcov
+tpaga_api/.coverage
+variables.tfvars
+tpaga_api/.sql.log
+tpaga_api/.sql.test.log
+tpaga_api/.test.log
+celerybeat-schedule
+celerybeat.pid
+
+.directory
+calhost
+nohup.out
+venv/
+/common/libs
+.DS_Store
+
+*.mo
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+
+#Idea
+.idea
+
+#emacs
+*.orig
+flycheck_*
+*_flymake.*
+
+# custom
+tpaga_api/gateway_bbogota/tests/test_encrypt/*
