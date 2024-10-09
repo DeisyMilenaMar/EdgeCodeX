@@ -1,0 +1,7 @@
+FROM postgres:14.10
+
+# Copia el script de inicialización al contenedor
+COPY create-dbs.sh /docker-entrypoint-initdb.d/
+
+# Asegúrate de que el script tiene permisos de ejecución
+RUN chmod +x /docker-entrypoint-initdb.d/create-dbs.sh

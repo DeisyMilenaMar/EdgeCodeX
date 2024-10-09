@@ -1,0 +1,65 @@
+
+services:
+  web:
+    build: .
+    command: ./start
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+    networks:
+      - apipython_net
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile_postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    networks:
+      - apipython_net
+
+  redis:
+    image: redis:alpine
+    networks:
+      - apipython_net
+
+  celery:
+    build: .
+    command: celery -A app worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - .env
+    networks:
+      - apipython_net
+
+  celery-beat:
+    build: .
+    command: celery -A app beat --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - .env
+    networks:
+      - apipython_net
+
+volumes:
+  postgres_data:
+
+networks:
+  apipython_net:
+    driver: bridge

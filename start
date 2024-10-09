@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Inicia el servidor de desarrollo de Django
+python manage.py runserver 0.0.0.0:8000
+
+# Añadir una entrada DNS para la máquina host si no existe
+grep dockerhost /etc/hosts || /sbin/ip route | awk '/default/ { print $3 " dockerhost" }' >> /etc/hosts
+
+# Instalar dependencias de app
+cd /app
+pip install -r requirements.txt --user --upgrade
+
+# Si necesitas importar claves GPG (esto es opcional según tus necesidades)
+# gpg --import /app/gpg_keys/test_public_key.gpg
+# cat /app/gpg_keys/test_private_key_pass.txt | gpg --passphrase-fd 0 --yes --batch --import /app/gpg_keys/test_private_key.gpg
+
+# Mantener el contenedor activo si no hay ningún proceso principal
+while [ 1 ]; do
+    date
+    sleep 30
+done
